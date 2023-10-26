@@ -1,0 +1,64 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    - image: cancercodes/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/*.js'
+            dest: '.'
+    - image: cancercodes/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '.'
+    - image: cancercodes/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '.'
+    - image: cancercodes/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '.'
+    - image: cancercodes/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '.'
+    - image: cancercodes/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: '.'
+manifests:
+  rawYaml:
+    - infra/k8s/client-deployment.yaml
+    - infra/k8s/comments-deployment.yaml
+    - infra/k8s/event-bus-deployment.yaml
+    - infra/k8s/ingress-srv.yaml
+    - infra/k8s/moderation-deployment.yaml
+    - infra/k8s/posts-deployment.yaml
+    - infra/k8s/posts-service.yaml
+    - infra/k8s/query-deployment.yaml
